@@ -1,0 +1,24 @@
+model simp_sc/1.
+use stand.
+parameter lsh=0.001 :'coupling between dm and higgs',
+          als=2     :'Interaction between dm and mediator',
+          alt=0.5   :'4 point interaction for dm',
+          alm=0.5   :'4 point interaction for mediator',
+          lmh=0.002 :'coupling between mediator and higgs',
+          lpc=0.2   :'Cubeic coupiling of mediatior',
+          lpx=0.1   :'quad interaction between mediator and dm',
+          vm=100  :'VEV of mediator'.
+spinor X/AX:(darkmatter,mass Md=50,width WDM=0).
+scalar Y/Y:(mediator,mass m=50,width WM=0).
+let Yt=vev(vm)+Y.
+lterm X*(i*gamma*deriv+Md)*AX.
+lterm 1/2*(deriv^mu*Yt^mu)**2.
+lterm -lsh/4*pp*PP*X*AX+AddHermConj.
+lterm -lmh/4*pp*PP*Yt**2.
+lterm -m/2*Yt**2.
+lterm -alt/4*X*X*AX*AX+AddHermConj.
+lterm -alm/4*Yt**4.
+lterm -lpc/3*Yt**3.
+lterm -lpx/4*X*AX*Yt**2 +AddHermConj.
+lterm -als/3*Yt*X*AX +AddHermConj.
+CheckHerm.
